@@ -8,13 +8,16 @@ com\mycompany\perseablue\register$2.class
 com\mycompany\perseablue\sendCode.class
 com\mycompany\perseablue\riwayatTransaksi.class
 com\mycompany\perseablue\login$7.class
+com\mycompany\perseablue\Session.class
 com\mycompany\perseablue\dashboard$4.class
 com\mycompany\perseablue\login$2.class
 com\mycompany\perseablue\login$5.class
 com\mycompany\perseablue\PerSeaBlue.class
 com\mycompany\perseablue\register$4.class
 com\mycompany\perseablue\sendCode$4.class
+com\mycompany\perseablue\accountSetting$2.class
 com\mycompany\perseablue\dashboard$1.class
+com\mycompany\perseablue\accountSetting$4.class
 com\mycompany\perseablue\dashboard.class
 com\mycompany\perseablue\resetPass.class
 com\mycompany\perseablue\dashboard$3.class
@@ -28,6 +31,7 @@ com\mycompany\perseablue\register$3.class
 com\mycompany\perseablue\riwayatTransaksi$1.class
 com\mycompany\perseablue\accountSetting.class
 com\mycompany\perseablue\accountSetting$1.class
+com\mycompany\perseablue\accountSetting$3.class
 com\mycompany\perseablue\login.class
 com\mycompany\perseablue\register.class
 com\mycompany\perseablue\resetPass$1.class

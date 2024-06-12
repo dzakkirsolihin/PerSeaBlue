@@ -4,6 +4,12 @@
  */
 package com.mycompany.perseablue;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author WIN11
@@ -14,8 +20,14 @@ public class accountSetting extends javax.swing.JInternalFrame {
      * Creates new form accountSetting
      */
     public accountSetting() {
-        initComponents();
+        initComponents(); // Inisialisasi komponen
+        String email = Session.getInstance().getUserEmail(); // Ambil email dari session
+        if (!email.isEmpty()) {
+            loadUserData(email); // Panggil metode untuk memuat data pengguna berdasarkan email
+        }
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,43 +40,35 @@ public class accountSetting extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        fieldEmail = new javax.swing.JTextField();
+        fieldNoHP = new javax.swing.JTextField();
+        fieldNama = new javax.swing.JTextField();
+        fieldAlamat = new javax.swing.JTextField();
+        fieldNoIdentitas = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        editbtn = new javax.swing.JButton();
+        fieldJK = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
 
         jPanel2.setBackground(new java.awt.Color(239, 244, 255));
 
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        fieldEmail.setEditable(false);
+        fieldEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                fieldEmailActionPerformed(evt);
             }
         });
 
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
-
-        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
-
-        jTextField4.setForeground(new java.awt.Color(0, 0, 0));
-
-        jTextField6.setForeground(new java.awt.Color(0, 0, 0));
-
-        jTextField7.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        fieldNoIdentitas.setEditable(false);
+        fieldNoIdentitas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                fieldNoIdentitasActionPerformed(evt);
             }
         });
 
@@ -80,12 +84,19 @@ public class accountSetting extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Nomor Identitas");
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 153));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Edit");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        editbtn.setBackground(new java.awt.Color(0, 0, 153));
+        editbtn.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn.setText("Edit");
+        editbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                editbtnActionPerformed(evt);
+            }
+        });
+
+        fieldJK.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-laki", "Perempuan" }));
+        fieldJK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldJKActionPerformed(evt);
             }
         });
 
@@ -104,13 +115,13 @@ public class accountSetting extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField4)
-                    .addComponent(jTextField6)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(fieldNama)
+                    .addComponent(fieldNoHP)
+                    .addComponent(fieldAlamat)
+                    .addComponent(fieldNoIdentitas, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(fieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(editbtn, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fieldJK, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -118,30 +129,30 @@ public class accountSetting extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(86, 86, 86)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldNoHP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(fieldJK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(46, 46, 46)
+                    .addComponent(jLabel5)
+                    .addComponent(fieldAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldNoIdentitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(40, 40, 40)
-                .addComponent(jButton1)
+                .addComponent(editbtn)
                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
@@ -152,14 +163,14 @@ public class accountSetting extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(210, 210, 210)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(229, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -176,21 +187,110 @@ public class accountSetting extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void fieldNoIdentitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNoIdentitasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_fieldNoIdentitasActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void editbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+        // Ambil data dari input field
+        String email = fieldEmail.getText();
+        String nama = fieldNama.getText();
+        String nomorHP = fieldNoHP.getText();
+        String jenisKelamin = (String)fieldJK.getSelectedItem();
+        String alamat = fieldAlamat.getText();
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Tampilkan dialog konfirmasi
+        int response = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin mengubah data akun?", "Konfirmasi", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+            Connection koneksi = null;
+            PreparedStatement stateUpdate = null;
+
+            try {
+                koneksi = (Connection) koneksidb.configDB(); // Koneksi ke database
+                String sqlUpdate = "UPDATE data_users SET nama = ?, nomorhp = ?, jenisKelamin = ?, alamat = ? WHERE email = ?"; // Query untuk update data pengguna
+                stateUpdate = koneksi.prepareStatement(sqlUpdate); // Persiapan statement
+                stateUpdate.setString(1, nama); // Set parameter nama
+                stateUpdate.setString(2, nomorHP); // Set parameter nomor HP
+                stateUpdate.setString(3, jenisKelamin); // Set parameter jenis kelamin
+                stateUpdate.setString(4, alamat); // Set parameter alamat
+                stateUpdate.setString(5, email); // Set parameter email
+                int rowsUpdated = stateUpdate.executeUpdate(); // Eksekusi update
+
+                if (rowsUpdated > 0) {
+                    JOptionPane.showMessageDialog(null, "Data berhasil diperbarui"); // Notifikasi jika update berhasil
+                    // Navigasi ke dashboard setelah update berhasil
+                    dashboard dashboard = new dashboard(); // Buat instance dari DashboardForm
+                    dashboard.setVisible(true); // Tampilkan DashboardForm
+                    this.dispose(); // Tutup form saat ini (MyForm)
+                } else {
+                    JOptionPane.showMessageDialog(null, "Data tidak ada perubahan"); // Notifikasi jika data tidak ditemukan atau tidak ada perubahan
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Terjadi kesalahan: " + e.getMessage()); // Tampilkan pesan error jika ada
+            } finally {
+                try {
+                    if (stateUpdate != null) stateUpdate.close(); // Tutup statement
+                    if (koneksi != null) koneksi.close(); // Tutup koneksi
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Terjadi kesalahan: " + e.getMessage()); // Tampilkan pesan error jika ada
+                }
+            }
+        }
+    }//GEN-LAST:event_editbtnActionPerformed
+
+    private void fieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_fieldEmailActionPerformed
 
+    private void fieldJKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldJKActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldJKActionPerformed
+
+    private void loadUserData(String email) {
+        Connection koneksi = null;
+        PreparedStatement stateEmail = null;
+        ResultSet hasilEmail = null;
+
+        try {
+            koneksi = (Connection) koneksidb.configDB(); // Koneksi ke database
+            String sqlEmail = "SELECT * FROM data_users WHERE email = ?"; // Query untuk mengambil data pengguna berdasarkan email
+            stateEmail = koneksi.prepareStatement(sqlEmail); // Persiapan statement
+            stateEmail.setString(1, email); // Set parameter email
+            hasilEmail = stateEmail.executeQuery(); // Eksekusi query
+
+            if (hasilEmail.next()) {
+                fieldNama.setText(hasilEmail.getString("nama")); // Set field nama dengan data dari database
+                fieldEmail.setText(hasilEmail.getString("email")); // Set field email dengan data dari database
+                fieldNoHP.setText(hasilEmail.getString("nomorhp")); // Set field nomor HP dengan data dari database
+                fieldJK.setSelectedItem(hasilEmail.getString("jenisKelamin")); // Set field jenis kelamin dengan data dari database
+                fieldAlamat.setText(hasilEmail.getString("alamat")); // Set field alamat dengan data dari database
+                fieldNoIdentitas.setText(hasilEmail.getString("nomorIdentitas")); // Set field nomor identitas dengan data dari database
+            } else {
+                JOptionPane.showMessageDialog(null, "Data tidak ditemukan"); // Notifikasi jika data tidak ditemukan
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan: " + e.getMessage()); // Tampilkan pesan error jika ada
+        } finally {
+            try {
+                if (hasilEmail != null) hasilEmail.close(); // Tutup result set
+                if (stateEmail != null) stateEmail.close(); // Tutup statement
+                if (koneksi != null) koneksi.close(); // Tutup koneksi
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Terjadi kesalahan: " + e.getMessage()); // Tampilkan pesan error jika ada
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton editbtn;
+    private javax.swing.JTextField fieldAlamat;
+    private javax.swing.JTextField fieldEmail;
+    private javax.swing.JComboBox<String> fieldJK;
+    private javax.swing.JTextField fieldNama;
+    private javax.swing.JTextField fieldNoHP;
+    private javax.swing.JTextField fieldNoIdentitas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -199,11 +299,5 @@ public class accountSetting extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }

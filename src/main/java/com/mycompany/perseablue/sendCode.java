@@ -4,10 +4,13 @@
  */
 package com.mycompany.perseablue;
 
-import java.util.Random;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Properties;
+import java.util.Random;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -161,6 +164,16 @@ public class sendCode extends javax.swing.JFrame {
 
     private void sendCodebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendCodebtnActionPerformed
         // TODO add your handling code here:
+        String email = txtEmail.getText();
+    
+        // Check if email is registered in the database
+        boolean emailExists = checkEmailInDatabase(email);
+
+        if (!emailExists) {
+            JOptionPane.showMessageDialog(null, "Email belum terdaftar, lakukan registrasi terlebih dahulu");
+            return;
+        }
+
         try {
             Random rand = new Random(); // Membuat objek Random untuk menghasilkan angka acak
             randomCode = rand.nextInt(999999); // Menghasilkan angka acak antara 0 dan 999999 untuk kode reset
@@ -204,10 +217,41 @@ public class sendCode extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-        
-        
     }//GEN-LAST:event_sendCodebtnActionPerformed
 
+    private boolean checkEmailInDatabase(String email) {
+        boolean exists = false;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Connect to your database (adjust the URL, user, and password as necessary)
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_perseablue", "root", "");
+            String sql = "SELECT * FROM data_users WHERE email = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                exists = true; // Email found in the database
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error checking email in database: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return exists;
+    }
+    
     /**
      * @param args the command line arguments
      */
