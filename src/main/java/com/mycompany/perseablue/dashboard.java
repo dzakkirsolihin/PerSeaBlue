@@ -62,21 +62,21 @@ public class dashboard extends javax.swing.JFrame {
             .addGroup(layarLayout.createSequentialGroup()
                 .addGroup(layarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layarLayout.createSequentialGroup()
-                        .addGap(310, 310, 310)
-                        .addComponent(jLabel1))
+                        .addGap(115, 115, 115)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layarLayout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(112, Short.MAX_VALUE))
+                        .addGap(329, 329, 329)
+                        .addComponent(jLabel1)))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
         layarLayout.setVerticalGroup(
             layarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layarLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addGap(66, 66, 66)
                 .addComponent(jLabel1)
-                .addGap(51, 51, 51)
+                .addGap(25, 25, 25)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(365, Short.MAX_VALUE))
+                .addContainerGap(409, Short.MAX_VALUE))
         );
 
         jMenuBar1.setBackground(new java.awt.Color(0, 153, 255));
@@ -155,9 +155,6 @@ public class dashboard extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        pesanTiket tiket = new pesanTiket();
-        layar.add(tiket);
-        tiket.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

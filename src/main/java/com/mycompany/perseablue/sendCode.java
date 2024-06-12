@@ -165,8 +165,8 @@ public class sendCode extends javax.swing.JFrame {
             Random rand = new Random(); // Membuat objek Random untuk menghasilkan angka acak
             randomCode = rand.nextInt(999999); // Menghasilkan angka acak antara 0 dan 999999 untuk kode reset
             String host = "smtp.gmail.com"; // Host server SMTP Gmail
-            String user = "perseablue@gmail.com"; // Email pengirim
-            String pass = "rqzh gkci tjvs tqro"; // App password untuk email pengirim
+            String user = "perseablue6@gmail.com"; // Email pengirim
+            String pass = "wxbs pohn gwbx jqxr"; // App password untuk email pengirim
             String to = txtEmail.getText(); // Mendapatkan email penerima dari input pengguna
             String subject = "Resetting Code Perseablue"; // Subjek email
             String message = "Kode reset password kamu adalah " + randomCode; // Pesan email berisi kode reset
