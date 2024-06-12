@@ -80,6 +80,7 @@ public class dashboard extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         transaksibtn = new javax.swing.JMenuItem();
@@ -180,6 +181,13 @@ public class dashboard extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Pertandingan");
 
+        jButton2.setText("Riwayat Pesanan");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -190,9 +198,6 @@ public class dashboard extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(96, 96, 96)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(387, 387, 387)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(115, 115, 115)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,11 +218,18 @@ public class dashboard extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(pertandingan, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(inputNomorIdentitas, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(60, 60, 60)
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(inputEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(inputNomorIdentitas, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(60, 60, 60)
+                                                .addComponent(jLabel4)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(inputEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))))))))
                 .addContainerGap(5293, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -243,9 +255,11 @@ public class dashboard extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(inputEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(21, 21, 21)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(74, 74, 74))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -318,17 +332,17 @@ public class dashboard extends javax.swing.JFrame {
                     // Tampilkan pesan bahwa email atau NIK sudah terdaftar
                     JOptionPane.showMessageDialog(null, "No Identitas pada pertandingan ini sudah terdaftar. Silakan gunakan yang lain.");
                 } else {
-           Connection PenghubungDatabase = (Connection) koneksidb.configDB();
-           String QueryInsert = "INSERT INTO data_pesanan(email, nomorIdentitas, id_pertandingan, pertandingan) VALUES (?, ?, ?, ?);";
-           PreparedStatement preparedStatement = PenghubungDatabase.prepareStatement(QueryInsert);
-           preparedStatement.setString(1, Email);
-           preparedStatement.setString(2, NomorIdentitas);
-           preparedStatement.setString(3, idtanding);
-           preparedStatement.setString(4, tanding);
-           preparedStatement.executeUpdate();
+                    Connection PenghubungDatabase = (Connection) koneksidb.configDB();
+                    String QueryInsert = "INSERT INTO data_pesanan(email, nomorIdentitas, id_pertandingan, pertandingan) VALUES (?, ?, ?, ?);";
+                    PreparedStatement preparedStatement = PenghubungDatabase.prepareStatement(QueryInsert);
+                    preparedStatement.setString(1, Email);
+                    preparedStatement.setString(2, NomorIdentitas);
+                    preparedStatement.setString(3, idtanding);
+                    preparedStatement.setString(4, tanding);
+                    preparedStatement.executeUpdate();
            
-           this.setVisible(false);
-            new pemesananTiket().setVisible(true);
+                    this.setVisible(false);
+                    new pemesananTiket().setVisible(true);
                 }
               }
        }catch(Exception e){
@@ -357,6 +371,12 @@ public class dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_inputEmailActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new riwayatTransaksi().setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -367,6 +387,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField inputEmail;
     private javax.swing.JTextField inputNomorIdentitas;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -198,7 +198,7 @@ public class authPembayaran extends javax.swing.JFrame {
 
             // 7. validasi sql jika berhasil dan jika gagal
             if (hasilsql.next()) {
-                JOptionPane.showMessageDialog(null, "Berhasil Login");
+                JOptionPane.showMessageDialog(null, "Autentikasi Berhasil");
                 dashboard beranda = new dashboard();
                 beranda.setVisible(true);
                 this.setVisible(false);

@@ -44,7 +44,6 @@ public class login extends javax.swing.JFrame {
         loginPass = new javax.swing.JPasswordField();
         registerbtn = new javax.swing.JButton();
         loginbtn = new javax.swing.JButton();
-        forgotPassLink = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -105,20 +104,6 @@ public class login extends javax.swing.JFrame {
             }
         });
 
-        forgotPassLink.setBackground(new java.awt.Color(0, 1, 36));
-        forgotPassLink.setForeground(new java.awt.Color(0, 1, 36));
-        forgotPassLink.setText("Forgot Password?");
-        forgotPassLink.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                forgotPassLinkMouseMoved(evt);
-            }
-        });
-        forgotPassLink.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                forgotPassLinkMouseClicked(evt);
-            }
-        });
-
         jLabel4.setText("Login sebagai admin");
 
         jButton1.setBackground(new java.awt.Color(51, 204, 0));
@@ -152,9 +137,7 @@ public class login extends javax.swing.JFrame {
                             .addGap(0, 0, Short.MAX_VALUE))
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(0, 0, Short.MAX_VALUE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(forgotPassLink)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addComponent(jLabel3)))
@@ -173,9 +156,7 @@ public class login extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(loginPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(forgotPassLink)
-                .addGap(18, 18, 18)
+                .addGap(52, 52, 52)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(loginbtn)
                     .addComponent(registerbtn))
@@ -272,17 +253,6 @@ public class login extends javax.swing.JFrame {
         new register().setVisible(true);
     }//GEN-LAST:event_registerbtnActionPerformed
 
-    private void forgotPassLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPassLinkMouseClicked
-        // TODO add your handling code here:
-        this.setVisible(false);
-        new sendCode().setVisible(true);
-    }//GEN-LAST:event_forgotPassLinkMouseClicked
-
-    private void forgotPassLinkMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPassLinkMouseMoved
-        // TODO add your handling code here:
-        forgotPassLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_forgotPassLinkMouseMoved
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
@@ -330,7 +300,6 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel forgotPassLink;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

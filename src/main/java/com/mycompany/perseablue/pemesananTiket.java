@@ -52,7 +52,7 @@ public class pemesananTiket extends javax.swing.JFrame {
              ResultSet Result = state.executeQuery(query);
              while (Result.next()){
                  tb.addRow(new Object[]{
-                     counter++,Result.getString(7), Result.getString(2),Result.getString(3),Result.getString(4), Result.getString(5),Result.getString(6),Result.getString(10),Result.getString(9),
+                     counter++,Result.getString(7), Result.getString(2), Result.getString(3),Result.getString(4), Result.getString(5),Result.getString(6),Result.getString(10),Result.getString(9),
                  });
              }
             tabelPemesananTiket.setModel(tb);
@@ -135,10 +135,12 @@ public class pemesananTiket extends javax.swing.JFrame {
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(802, 1000));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 1, 36));
         jPanel1.setName(""); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 1000));
         jPanel1.setLayout(null);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Nama");
@@ -483,7 +485,7 @@ public class pemesananTiket extends javax.swing.JFrame {
     private void tabelPemesananTiketMouseClicked(java.awt.event.MouseEvent evt) {
         try {
             int baris = tabelPemesananTiket.rowAtPoint(evt.getPoint());
-            if (baris != -1) {
+               if (baris != -1) {
                 Object noObj = tabelPemesananTiket.getValueAt(baris, 1);
                 inputNomorIdentitas.setText(noObj != null ? noObj.toString() : "");
     
